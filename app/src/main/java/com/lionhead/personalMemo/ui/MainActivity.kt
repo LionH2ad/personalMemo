@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lionhead.personalMemo.ExerciseViewModel
 import com.lionhead.personalMemo.R
 import com.lionhead.personalMemo.data.Exercise
+import com.lionhead.personalMemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: ExerciseViewModel
     private lateinit var adapter: ExerciseAdapter
 
@@ -29,7 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val factory = ExerciseViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory)[ExerciseViewModel::class.java]
@@ -47,15 +51,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         })
 
-        val recyclerView: RecyclerView = findViewById(R.id.exerciseRecyclerView)
+        val recyclerView: RecyclerView = binding.exerciseRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        viewModel.allExercises.observe(this, { exercises ->
+        viewModel.allExercises.observe(this) { exercises ->
             adapter.submitList(exercises)
-        })
+        }
 
-        findViewById<Button>(R.id.addExerciseButton).setOnClickListener {
+        binding.addExerciseButton.setOnClickListener {
             showAddExerciseDialog()
         }
     }
