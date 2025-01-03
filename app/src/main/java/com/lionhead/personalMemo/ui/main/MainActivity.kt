@@ -1,4 +1,4 @@
-package com.lionhead.personalMemo.ui
+package com.lionhead.personalMemo.ui.main
 
 import android.app.Activity
 import android.content.Intent
@@ -13,10 +13,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayoutMediator
 import com.lionhead.personalMemo.ExerciseViewModel
 import com.lionhead.personalMemo.R
 import com.lionhead.personalMemo.data.Exercise
 import com.lionhead.personalMemo.databinding.ActivityMainBinding
+import com.lionhead.personalMemo.ui.adapter.ExerciseAdapter
+import com.lionhead.personalMemo.ui.ExerciseDetailActivity
+import com.lionhead.personalMemo.ui.ExerciseViewModelFactory
+import com.lionhead.personalMemo.ui.adapter.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,8 +37,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ViewBinding 초기화
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Adapter 설정
+        val pagerAdapter = ViewPagerAdapter(this)
+        binding.viewPager.adapter = pagerAdapter
+
+        // TabLayout과 ViewPager 연결
+        val tabTitles = listOf("Tab 1", "Tab 2", "Tab 3")
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = tabTitles[position]
+        }.attach()
 
         val factory = ExerciseViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory)[ExerciseViewModel::class.java]

@@ -1,4 +1,4 @@
-package com.lionhead.personalMemo.ui
+package com.lionhead.personalMemo.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
