@@ -47,12 +47,12 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager.adapter = pagerAdapter
 
         // TabLayout과 ViewPager 연결
-        val tabTitles = listOf("Tab 1", "Tab 2", "Tab 3")
+        val tabTitles = listOf("List", "Explain", "Memo")
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
 
-        val factory = ExerciseViewModelFactory(application)
+        /*val factory = ExerciseViewModelFactory(application)
         viewModel = ViewModelProvider(this, factory)[ExerciseViewModel::class.java]
         adapter = ExerciseAdapter(onDeleteClick = { exercise ->
             viewModel.deleteExercise(exercise.id)
@@ -78,10 +78,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.addExerciseButton.setOnClickListener {
             showAddExerciseDialog()
-        }
+        }*/
     }
 
-    private fun showAddExerciseDialog() {
+    /*private fun showAddExerciseDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_exercise, null)
         val dialog = AlertDialog.Builder(this)
             .setTitle("운동 추가")
@@ -115,15 +115,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         dialog.show()
-    }
+    }*/
 
-    private fun selectVideoFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "video/*"
-        startActivityForResult(intent, VIDEO_PICK_REQUEST_CODE)
-    }
+    //private fun selectVideoFromGallery() {
+    //    val intent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+    //    intent.type = "video/*"
+    //    startActivityForResult(intent, VIDEO_PICK_REQUEST_CODE)
+    //}
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == VIDEO_PICK_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val uri: Uri? = data?.data
@@ -132,9 +132,9 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "동영상 선택됨: $selectedVideoPath", Toast.LENGTH_SHORT).show()
             }
         }
-    }
+    }*/
 
-    private fun getPathFromUri(uri: Uri): String? {
+    /*private fun getPathFromUri(uri: Uri): String? {
         val projection = arrayOf(MediaStore.Video.Media.DATA)
         contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
             if (cursor.moveToFirst()) {
@@ -143,5 +143,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return null
-    }
+    }*/
 }
